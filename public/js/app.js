@@ -68476,8 +68476,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bootstrap/Button */ "./node_modules/react-bootstrap/esm/Button.js");
 /* harmony import */ var react_bootstrap_Container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap/Container */ "./node_modules/react-bootstrap/esm/Container.js");
 /* harmony import */ var react_bootstrap_Row__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap/Row */ "./node_modules/react-bootstrap/esm/Row.js");
-/* harmony import */ var react_bootstrap_Col__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-bootstrap/Col */ "./node_modules/react-bootstrap/esm/Col.js");
-/* harmony import */ var react_bootstrap_Image__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-bootstrap/Image */ "./node_modules/react-bootstrap/esm/Image.js");
+/* harmony import */ var react_bootstrap_Image__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-bootstrap/Image */ "./node_modules/react-bootstrap/esm/Image.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -68508,7 +68507,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-
 var Customer = /*#__PURE__*/function (_React$Component) {
   _inherits(Customer, _React$Component);
 
@@ -68521,9 +68519,9 @@ var Customer = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      numberOfPotions: 0 // email: { , fieldName: "Email", required: true, requiredTxt: "Email is required", formatErrorTxt: "Incorrect email format" },
-      // name: { , fieldName: "name", required: true, requiredTxt: "Name is required"  },
-      // allFieldsValid: false
+      numberOfPotions: 0,
+      price: 49.99 // email: { , fieldName: "Email", required: true, requiredTxt: "Email is required", formatErrorTxt: "Incorrect email format" },
+      // name: {fieldName: "name", required: true, requiredTxt: "Name is required"  },
 
     };
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
@@ -68534,12 +68532,19 @@ var Customer = /*#__PURE__*/function (_React$Component) {
     key: "handleChange",
     value: function handleChange(event) {
       var target = event.target;
-      this.setState({});
+      var name = target.name;
+      var newPrice = price.value * numberOfPotions.value; // * 49.99
+
+      this.setState({
+        // [name]: value,
+        price: newPrice
+      });
     }
   }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {
-      alert('Is it here?');
+      alert('Is it here?'); // adjust for success msg
+
       event.preventDefault();
     }
   }, {
@@ -68547,134 +68552,130 @@ var Customer = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Container__WEBPACK_IMPORTED_MODULE_4__["default"], {
         fluid: true
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Container__WEBPACK_IMPORTED_MODULE_4__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Magic Potion"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Row__WEBPACK_IMPORTED_MODULE_5__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Image__WEBPACK_IMPORTED_MODULE_7__["default"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Magic Potion"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Row__WEBPACK_IMPORTED_MODULE_5__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Image__WEBPACK_IMPORTED_MODULE_6__["default"], {
         src: "/images/magic-potion-product.png",
         rounded: true
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Group, {
         controlId: "numberOfPotions"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Label, null, "Quantity"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Control, {
         as: "select",
-        placeholder: "Max 3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "1"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "2"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "3")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Row__WEBPACK_IMPORTED_MODULE_5__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Group, {
+        type: "number",
+        placeholder: "Max 3",
+        name: "numberOfPotions",
+        required: true,
+        onChange: this.handleChange,
+        value: this.numberOfPotions
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "0"
+      }, "0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "1"
+      }, "1"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "2"
+      }, "2"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "3"
+      }, "3")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Row__WEBPACK_IMPORTED_MODULE_5__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Group, {
         controlId: "price"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Label, null, "Price"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Control, {
-        type: "name",
+        type: "number",
+        disabled: true,
         placeholder: "0.00",
+        name: "price",
+        value: this.state.price,
         onChange: this.handleChange
-      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Customer Details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Group, {
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Customer Details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Group, {
         controlId: "formName"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Control, {
-        type: "name",
+        type: "text",
         placeholder: "Name",
+        name: "fullName",
+        value: this.fullName,
+        required: true,
         onChange: this.handleChange
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Group, {
         controlId: "formAddress1"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Control, {
-        type: "name",
+        type: "text",
         placeholder: "Address Line 1",
+        name: "address1",
+        value: this.address1,
+        required: true,
         onChange: this.handleChange
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Group, {
         controlId: "formAddress2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Control, {
-        type: "name",
+        type: "text",
         placeholder: "Address Line 2",
+        name: "address2",
+        value: this.address2,
+        required: true,
         onChange: this.handleChange
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Group, {
         controlId: "formCity"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Control, {
-        type: "name",
+        type: "text",
         placeholder: "City",
+        name: "city",
+        value: this.city,
+        required: true,
         onChange: this.handleChange
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Group, {
         controlId: "formState"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Control, {
-        type: "name",
+        type: "text",
         placeholder: "State",
+        name: "formState",
+        value: this.formState,
+        required: true,
         onChange: this.handleChange
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Group, {
         controlId: "formZip"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Control, {
-        type: "name",
+        type: "text",
         placeholder: "Zip code",
+        name: "zip",
+        value: this.zip,
+        required: true,
         onChange: this.handleChange
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Group, {
         controlId: "formEmail"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Control, {
-        type: "name",
+        type: "text",
         placeholder: "Email",
+        name: "email",
+        value: this.email,
+        required: true,
         onChange: this.handleChange
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Group, {
         controlId: "formPhone"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Control, {
-        type: "name",
+        type: "text",
         placeholder: "Phone",
+        name: "phone",
+        value: this.phone,
+        required: true,
         onChange: this.handleChange
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Group, {
         controlId: "formCreditCard"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Control, {
-        type: "name",
+        type: "text",
         placeholder: "Credit Card Number",
+        name: "ccnum",
+        value: this.ccnum,
+        required: true,
         onChange: this.handleChange
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Group, {
         controlId: "formCCExpiration"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_2__["default"].Control, {
-        type: "name",
+        type: "text",
         placeholder: "mm/yy",
+        name: "ccexp",
+        value: this.ccexp,
+        required: true,
         onChange: this.handleChange
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
         variant: "primary",
         type: "submit"
-      }, "Submit"))) // <div className="form">
-      //     <form onSubmit={this.handleSubmit}>
-      //     <label>
-      //         Name:
-      //         <input type="text" className={fieldClassName} value={this.state.value} onChange={this.handleChange} />
-      //     </label>
-      //     <br />
-      //     <label>
-      //         Street 1:
-      //         <input type="text" name="street1" />
-      //     </label>
-      //     <br />
-      //     <label>
-      //         Street 2:
-      //         <input type="text" name="street2" />
-      //     </label>
-      //     <br />
-      //     <label>
-      //         City:
-      //         <input type="text" name="city" />
-      //     </label>
-      //     <br />
-      //     <label>
-      //         State:
-      //         <input type="text" name="state" />
-      //     </label>
-      //     <br />
-      //     <label>
-      //         Zip:
-      //         <input type="text" name="zip" />
-      //     </label>
-      //     <br />
-      //     <label>
-      //         Phone:
-      //         <input type="text" name="phone" />
-      //     </label>
-      //     <br />
-      //     <label>
-      //         Quantity:
-      //         <select value={this.state.value} onChange={this.handleChange}>
-      //             <option value="zero">0</option>
-      //             <option value="one">1</option>
-      //             <option value="two">2</option>
-      //             <option value="three">3</option>
-      //     </select>
-      //     <br />
-      //     </label>
-      //     <input type="submit" value="Submit" />
-      //     </form>
-      // </div>  
-      ;
+      }, "Submit")));
     }
   }]);
 
@@ -68682,7 +68683,7 @@ var Customer = /*#__PURE__*/function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 
-react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Customer, null), document.getElementById('welcome'));
+react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Customer, null), document.getElementById('product'));
 
 /***/ }),
 
