@@ -1,8 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PurchaseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +14,4 @@ use App\Http\Controllers\PurchaseController;
 |
 */
 
-Route::post('/create', [PurchaseController::class, 'create']);
+Route::post('/create', [OrderController::class, 'create']);
