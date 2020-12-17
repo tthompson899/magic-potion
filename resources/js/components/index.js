@@ -74,7 +74,7 @@ class Customer extends React.Component {
 
         try {
             const response = await axios.request({
-                url: 'http://magic-potion.test/api/magic',
+                url: '{process.env.APP_URL}/api/magic',
                 method: 'POST',
                 data: data
             });
