@@ -75,7 +75,7 @@ class Customer extends PureComponent {
 
         try {
             const response = await axios.request({
-                url: 'http://magic-potion.test/api/create',
+                url: 'http://magic-potion.test/api/magic',
                 method: 'POST',
                 data: data
             });

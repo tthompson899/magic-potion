@@ -14,4 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/create', [OrderController::class, 'create']);
+Route::post('/magic', [OrderController::class, 'create']);
