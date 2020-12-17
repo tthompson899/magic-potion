@@ -74,7 +74,7 @@ class Customer extends React.Component {
 
         try {
             const response = await axios.request({
-                url: 'https://floating-inlet-95445.herokuapp.com/api/magic',
+                url: '{process.env.APP_URL}/api/magic',
                 method: 'POST',
                 data: data
             });
