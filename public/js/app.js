@@ -69393,7 +69393,7 @@ var Customer = /*#__PURE__*/function (_React$Component) {
                 _context.prev = 2;
                 _context.next = 5;
                 return axios__WEBPACK_IMPORTED_MODULE_8___default.a.request({
-                  url: 'http://magic-potion.test/api/magic',
+                  url: 'https://floating-inlet-95445.herokuapp.com/api/magic',
                   method: 'POST',
                   data: data
                 });
