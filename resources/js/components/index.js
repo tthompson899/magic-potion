@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { useState, PureComponent } from 'react';
 import ReactDOM from 'react-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -16,7 +16,7 @@ class Customer extends PureComponent {
       super(props);
       this.state = {
         numberOfPotions: 0,
-        price: 0,
+        price: 49.99,
         fullName: '',
         email: '',
         phone: '',
@@ -27,7 +27,6 @@ class Customer extends PureComponent {
         zip: '',
         ccnum: '',
         ccexp: '',
-
       };
   
       this.handleInputChange = this.handleInputChange.bind(this);
@@ -43,7 +42,7 @@ class Customer extends PureComponent {
       });
     }
 
-    handlePrice(event) {        
+    handlePrice() { 
         const newPrice = 49.99 * numberOfPotions.value;
 
         this.setState({
@@ -58,16 +57,20 @@ class Customer extends PureComponent {
         let data = {
             name: this.state.fullName,
             email: this.state.email,
+            address: {
+                address1: this.state.address1,
+                address2: this.state.address2,
+                city: this.state.city,
+                state: this.state.formState,
+                zip: this.state.zip,
+            },
             phone: this.state.phone,
-            address1: this.state.address1,
-            address2: this.state.address2,
-            city: this.state.city,
-            state: this.state.formState,
-            zip: this.state.zip,
             quantity: this.state.numberOfPotions,
-            price: this.state.price,
-            credit_card_number: this.state.ccnum,
-            expiration_date: this.state.ccexp,
+            total: this.state.price,
+            payment: {
+                creditCardNumber: this.state.ccnum,
+                expirationDate: this.state.ccexp,
+            }
         };
 
         try {
@@ -76,9 +79,26 @@ class Customer extends PureComponent {
                 method: 'POST',
                 data: data
             });
-            console.log(response);
 
-        } catch (e) {
+            // upon success response, clear form
+            if (response.status == 200) {
+                this.setState({
+                    numberOfPotions: 0,
+                    price: 49.99,
+                    fullName: '',
+                    email: '',
+                    phone: '',
+                    address1: '',
+                    address2: '',
+                    city: '',
+                    formState: '',
+                    zip: '',
+                    ccnum: '',
+                    ccexp: '',
+                });
+            }
+
+            } catch (e) {
             console.log(e);
         }
     };
@@ -94,8 +114,7 @@ class Customer extends PureComponent {
 
                     <Form.Group controlId="numberOfPotions">
                         <Form.Label>Quantity</Form.Label>
-                        <Form.Control as="select" type="number" placeholder="Max 3" name="numberOfPotions" required onChange={this.handlePrice} value={this.numberOfPotions}>
-                            <option value="0">0</option>
+                        <Form.Control as="select" type="number" placeholder="Max 3" name="numberOfPotions" required onChange={(event) => this.handlePrice(event)}>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -106,43 +125,42 @@ class Customer extends PureComponent {
                 <Row>
                     <Form.Group controlId="price">
                         <Form.Label>Price</Form.Label>
-                        <Form.Control type="number" disabled={true} placeholder="0.00" name="price" value={this.state.price} onChange={this.handlePrice}/>
+                        <Form.Control type="number" disabled={true} placeholder="49.99" name="price" onChange={(event) => this.handlePrice(event)} value={this.state.price} /> 
                     </Form.Group>
                 </Row>
 
                 <h3>Customer Details</h3>
-                {/* <Form method="POST"> */}
                     <Form.Group controlId="formName">
-                        <Form.Control type="text" placeholder="Name" name="fullName" value={this.fullName} onChange={(val) => this.handleInputChange(val)} required /> {/*onChange={(e) => setName(e.target.value)} */}
+                        <Form.Control type="text" placeholder="Name" name="fullName" value={this.state.fullName} onChange={(val) => this.handleInputChange(val)} required />
                     </Form.Group>
                     <Form.Group controlId="formEmail">
-                        <Form.Control type="email" placeholder="Email" name="email" value={this.email} onChange={(val) => this.handleInputChange(val)}  required />   {/* onChange={(e) => setEmail(e.target.value)} */}
+                        <Form.Control type="email" placeholder="Email" name="email" value={this.state.email} onChange={(val) => this.handleInputChange(val)}  required />
                     </Form.Group>
                     <Form.Group controlId="formPhone">
-                        <Form.Control type="text" placeholder="Phone" name="phone" value={this.phone} onChange={(val) => this.handleInputChange(val)}  required />
+                        <Form.Control type="text" placeholder="Phone" name="phone" value={this.state.phone} onChange={(val) => this.handleInputChange(val)}  required />
                     </Form.Group>
 
                     <Form.Group controlId="formAddress1">
-                        <Form.Control type="text" placeholder="Address Line 1" name="address1" value={this.address1} onChange={(val) => this.handleInputChange(val)} required />
+                        <Form.Control type="text" placeholder="Address Line 1" name="address1" value={this.state.address1} onChange={(val) => this.handleInputChange(val)} required />
                     </Form.Group>
                     <Form.Group controlId="formAddress2">
-                        <Form.Control type="text" placeholder="Address Line 2" name="address2" value={this.address2} onChange={(val) => this.handleInputChange(val)} required />
+                        <Form.Control type="text" placeholder="Address Line 2" name="address2" value={this.state.address2} onChange={(val) => this.handleInputChange(val)} required />
                     </Form.Group>
                     <Form.Group controlId="formCity">
-                        <Form.Control type="text" placeholder="City" name="city" value={this.city} required onChange={(val) => this.handleInputChange(val)}  />
+                        <Form.Control type="text" placeholder="City" name="city" value={this.state.city} required onChange={(val) => this.handleInputChange(val)}  />
                     </Form.Group>
                     <Form.Group controlId="formState">
-                        <Form.Control type="text" placeholder="State" name="formState" value={this.formState} onChange={(val) => this.handleInputChange(val)} required />
+                        <Form.Control type="text" placeholder="State" name="formState" value={this.state.formState} onChange={(val) => this.handleInputChange(val)} required />
                     </Form.Group>
                     <Form.Group controlId="formZip">
-                        <Form.Control type="text" placeholder="Zip code" name="zip" value={this.zip} onChange={(val) => this.handleInputChange(val)}  required />
+                        <Form.Control type="text" placeholder="Zip code" name="zip" value={this.state.zip} onChange={(val) => this.handleInputChange(val)}  required />
                     </Form.Group>
 
                     <Form.Group controlId="formCreditCard">
-                        <Form.Control type="text" placeholder="Credit Card Number" name="ccnum" value={this.ccnum} onChange={(val) => this.handleInputChange(val)} required />
+                        <Form.Control type="text" placeholder="Credit Card Number" name="ccnum" value={this.state.ccnum} onChange={(val) => this.handleInputChange(val)} required />
                     </Form.Group>
                     <Form.Group controlId="formCCExpiration">
-                        <Form.Control type="text" placeholder="mm/yy" name="ccexp" value={this.ccexp} onChange={(val) => this.handleInputChange(val)} required />
+                        <Form.Control type="text" placeholder="mm/yy" name="ccexp" value={this.state.ccexp} onChange={(val) => this.handleInputChange(val)} required />
                     </Form.Group>
 
 
@@ -156,7 +174,7 @@ class Customer extends PureComponent {
 }
 
 export default Customer;
-  
+
 if (document.getElementById('product')) {
     ReactDOM.render( <Customer />, document.getElementById('product'));
 }
