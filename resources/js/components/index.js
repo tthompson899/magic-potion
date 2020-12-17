@@ -8,15 +8,11 @@ import Image from 'react-bootstrap/Image';
 import axios from 'axios';
 import Error from './Errors';
 
-// todo: 
-// - add validation
-// - add success and error msgs
-
-class Customer extends PureComponent {
+class Customer extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        numberOfPotions: 0,
+        numberOfPotions: 1,
         price: 49.99,
         fullName: '',
         email: '',
@@ -29,6 +25,7 @@ class Customer extends PureComponent {
         ccnum: '',
         ccexp: '',
         errors: {},
+        success: {}
       };
   
       this.handleInputChange = this.handleInputChange.bind(this);
@@ -81,11 +78,12 @@ class Customer extends PureComponent {
                 method: 'POST',
                 data: data
             });
-            // console.log(response.data.errors);
+
             // upon success response, clear form
             if (response.status == 200) {
+                console.log(response);
                 this.setState({
-                    numberOfPotions: 0,
+                    numberOfPotions: 1,
                     price: 49.99,
                     fullName: '',
                     email: '',
@@ -97,14 +95,19 @@ class Customer extends PureComponent {
                     zip: '',
                     ccnum: '',
                     ccexp: '',
+                    errors: {},
+                    success: {
+                        'message': response.data.message,
+                        'orderId': response.data.id 
+                    }
                 });
             }
 
             } catch (e) {
+                console.log(e.response.data);
                 this.setState({
                     errors: e.response.data.errors
                 });
-                console.log(e.response.data);
         }
     };
   
@@ -112,14 +115,16 @@ class Customer extends PureComponent {
         return (
             <Container fluid>
                 <h3>Magic Potion</h3>
+                    <div className="text-success" role="alert">
+                        <p>{ this.state.success.message }</p>
+                    </div>
                 <Form onSubmit={(event) => this.handleSubmit(event)} >
-
                 <Row>
                     <Image src="/images/magic-potion-product.png" rounded />
 
                     <Form.Group controlId="numberOfPotions">
                         <Form.Label>Quantity</Form.Label>
-                        <Form.Control as="select" type="number" placeholder="Max 3" name="numberOfPotions"  onChange={(event) => this.handlePrice(event)}>
+                        <Form.Control as="select" type="number" placeholder="Max 3" name="numberOfPotions"  onChange={(event) => this.handlePrice(event)} value={this.state.numberOfPotions} >
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -171,8 +176,8 @@ class Customer extends PureComponent {
                         <Form.Control type="text" placeholder="Address Line 1" name="address1" value={this.state.address1} onChange={(val) => this.handleInputChange(val)}  />
                         <Error
                             error={
-                                this.state.errors.address1
-                                ? this.state.errors.address1
+                                this.state.errors['address.address1']
+                                ? this.state.errors['address.address1']
                                 : null
                             }
                         />
@@ -181,8 +186,8 @@ class Customer extends PureComponent {
                         <Form.Control type="text" placeholder="Address Line 2" name="address2" value={this.state.address2} onChange={(val) => this.handleInputChange(val)} />
                         <Error
                             error={
-                                this.state.errors.address2
-                                ? this.state.errors.address2
+                                this.state.errors['address.address2']
+                                ? this.state.errors['address.address2']
                                 : null
                             }
                         />
@@ -191,8 +196,8 @@ class Customer extends PureComponent {
                         <Form.Control type="text" placeholder="City" name="city" value={this.state.city}  onChange={(val) => this.handleInputChange(val)}  />
                         <Error
                             error={
-                                this.state.errors.city
-                                ? this.state.errors.city
+                                this.state.errors['address.city']
+                                ? this.state.errors['address.city']
                                 : null
                             }
                         />
@@ -201,8 +206,8 @@ class Customer extends PureComponent {
                         <Form.Control type="text" placeholder="State" name="formState" value={this.state.formState} onChange={(val) => this.handleInputChange(val)}  />
                         <Error
                             error={
-                                this.state.errors.state
-                                ? this.state.errors.state
+                                this.state.errors['address.state']
+                                ? this.state.errors['address.state']
                                 : null
                             }
                         />
@@ -211,8 +216,8 @@ class Customer extends PureComponent {
                         <Form.Control type="text" placeholder="Zip code" name="zip" value={this.state.zip} onChange={(val) => this.handleInputChange(val)}   />
                         <Error
                             error={
-                                this.state.errors.zip
-                                ? this.state.errors.zip
+                                this.state.errors['address.zip']
+                                ? this.state.errors['address.zip']
                                 : null
                             }
                         />
@@ -222,8 +227,8 @@ class Customer extends PureComponent {
                         <Form.Control type="text" placeholder="Credit Card Number" name="ccnum" value={this.state.ccnum} onChange={(val) => this.handleInputChange(val)}  />
                         <Error
                             error={
-                                this.state.errors.creditCardNumber
-                                ? this.state.errors.creditCardNumber
+                                this.state.errors['payment.creditCardNumber']
+                                ? this.state.errors['payment.creditCardNumber']
                                 : null
                             }
                         />
@@ -232,13 +237,12 @@ class Customer extends PureComponent {
                         <Form.Control type="text" placeholder="mm/yy" name="ccexp" value={this.state.ccexp} onChange={(val) => this.handleInputChange(val)}  />
                         <Error
                             error={
-                                this.state.errors.expirationDate
-                                ? this.state.errors.expirationDate
+                                this.state.errors['payment.expirationDate']
+                                ? this.state.errors['payment.expirationDate']
                                 : null
                             }
                         />
                     </Form.Group>
-
 
                     <Button variant="primary" type="submit" noValidate>
                         Submit
