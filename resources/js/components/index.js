@@ -6,6 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Image from 'react-bootstrap/Image';
 import axios from 'axios';
+import Error from './Errors';
 
 // todo: 
 // - add validation
@@ -27,6 +28,7 @@ class Customer extends PureComponent {
         zip: '',
         ccnum: '',
         ccexp: '',
+        errors: {},
       };
   
       this.handleInputChange = this.handleInputChange.bind(this);
@@ -79,7 +81,7 @@ class Customer extends PureComponent {
                 method: 'POST',
                 data: data
             });
-
+            // console.log(response.data.errors);
             // upon success response, clear form
             if (response.status == 200) {
                 this.setState({
@@ -99,7 +101,10 @@ class Customer extends PureComponent {
             }
 
             } catch (e) {
-            console.log(e);
+                this.setState({
+                    errors: e.response.data.errors
+                });
+                console.log(e.response.data);
         }
     };
   
@@ -114,11 +119,12 @@ class Customer extends PureComponent {
 
                     <Form.Group controlId="numberOfPotions">
                         <Form.Label>Quantity</Form.Label>
-                        <Form.Control as="select" type="number" placeholder="Max 3" name="numberOfPotions" required onChange={(event) => this.handlePrice(event)}>
+                        <Form.Control as="select" type="number" placeholder="Max 3" name="numberOfPotions"  onChange={(event) => this.handlePrice(event)}>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
                         </Form.Control>
+
                     </Form.Group>
                 </Row>
 
@@ -131,36 +137,106 @@ class Customer extends PureComponent {
 
                 <h3>Customer Details</h3>
                     <Form.Group controlId="formName">
-                        <Form.Control type="text" placeholder="Name" name="fullName" value={this.state.fullName} onChange={(val) => this.handleInputChange(val)} required />
+                        <Form.Control type="text" placeholder="Name" name="fullName" value={this.state.fullName} onChange={(val) => this.handleInputChange(val)}  />
+                        <Error
+                            error={
+                                this.state.errors.name
+                                ? this.state.errors.name
+                                : null
+                            }
+                        />
                     </Form.Group>
                     <Form.Group controlId="formEmail">
-                        <Form.Control type="email" placeholder="Email" name="email" value={this.state.email} onChange={(val) => this.handleInputChange(val)}  required />
+                        <Form.Control type="email" placeholder="Email" name="email" value={this.state.email} onChange={(val) => this.handleInputChange(val)}   />
+                        <Error
+                            error={
+                                this.state.errors.email
+                                ? this.state.errors.email
+                                : null
+                            }
+                        />
                     </Form.Group>
                     <Form.Group controlId="formPhone">
-                        <Form.Control type="text" placeholder="Phone" name="phone" value={this.state.phone} onChange={(val) => this.handleInputChange(val)}  required />
+                        <Form.Control type="text" placeholder="Phone" name="phone" value={this.state.phone} onChange={(val) => this.handleInputChange(val)}   />
+                        <Error
+                            error={
+                                this.state.errors.phone
+                                ? this.state.errors.phone
+                                : null
+                            }
+                        />
                     </Form.Group>
 
                     <Form.Group controlId="formAddress1">
-                        <Form.Control type="text" placeholder="Address Line 1" name="address1" value={this.state.address1} onChange={(val) => this.handleInputChange(val)} required />
+                        <Form.Control type="text" placeholder="Address Line 1" name="address1" value={this.state.address1} onChange={(val) => this.handleInputChange(val)}  />
+                        <Error
+                            error={
+                                this.state.errors.address1
+                                ? this.state.errors.address1
+                                : null
+                            }
+                        />
                     </Form.Group>
                     <Form.Group controlId="formAddress2">
-                        <Form.Control type="text" placeholder="Address Line 2" name="address2" value={this.state.address2} onChange={(val) => this.handleInputChange(val)} required />
+                        <Form.Control type="text" placeholder="Address Line 2" name="address2" value={this.state.address2} onChange={(val) => this.handleInputChange(val)} />
+                        <Error
+                            error={
+                                this.state.errors.address2
+                                ? this.state.errors.address2
+                                : null
+                            }
+                        />
                     </Form.Group>
                     <Form.Group controlId="formCity">
-                        <Form.Control type="text" placeholder="City" name="city" value={this.state.city} required onChange={(val) => this.handleInputChange(val)}  />
+                        <Form.Control type="text" placeholder="City" name="city" value={this.state.city}  onChange={(val) => this.handleInputChange(val)}  />
+                        <Error
+                            error={
+                                this.state.errors.city
+                                ? this.state.errors.city
+                                : null
+                            }
+                        />
                     </Form.Group>
                     <Form.Group controlId="formState">
-                        <Form.Control type="text" placeholder="State" name="formState" value={this.state.formState} onChange={(val) => this.handleInputChange(val)} required />
+                        <Form.Control type="text" placeholder="State" name="formState" value={this.state.formState} onChange={(val) => this.handleInputChange(val)}  />
+                        <Error
+                            error={
+                                this.state.errors.state
+                                ? this.state.errors.state
+                                : null
+                            }
+                        />
                     </Form.Group>
                     <Form.Group controlId="formZip">
-                        <Form.Control type="text" placeholder="Zip code" name="zip" value={this.state.zip} onChange={(val) => this.handleInputChange(val)}  required />
+                        <Form.Control type="text" placeholder="Zip code" name="zip" value={this.state.zip} onChange={(val) => this.handleInputChange(val)}   />
+                        <Error
+                            error={
+                                this.state.errors.zip
+                                ? this.state.errors.zip
+                                : null
+                            }
+                        />
                     </Form.Group>
 
                     <Form.Group controlId="formCreditCard">
-                        <Form.Control type="text" placeholder="Credit Card Number" name="ccnum" value={this.state.ccnum} onChange={(val) => this.handleInputChange(val)} required />
+                        <Form.Control type="text" placeholder="Credit Card Number" name="ccnum" value={this.state.ccnum} onChange={(val) => this.handleInputChange(val)}  />
+                        <Error
+                            error={
+                                this.state.errors.creditCardNumber
+                                ? this.state.errors.creditCardNumber
+                                : null
+                            }
+                        />
                     </Form.Group>
                     <Form.Group controlId="formCCExpiration">
-                        <Form.Control type="text" placeholder="mm/yy" name="ccexp" value={this.state.ccexp} onChange={(val) => this.handleInputChange(val)} required />
+                        <Form.Control type="text" placeholder="mm/yy" name="ccexp" value={this.state.ccexp} onChange={(val) => this.handleInputChange(val)}  />
+                        <Error
+                            error={
+                                this.state.errors.expirationDate
+                                ? this.state.errors.expirationDate
+                                : null
+                            }
+                        />
                     </Form.Group>
 
 

@@ -11,9 +11,8 @@ class OrderController extends Controller
 {
     public function create(Request $request)
     {
-        \Log::info("it's here", [
-            'data' => $request
-        ]);
+        $this->validateData($request);
+
         $data = $request->only(['name', 'email', 'address', 'phone', 'quantity', 'total', 'payment.creditCardNumber', 'payment.expirationDate']);
 
         // get current month
@@ -53,5 +52,42 @@ class OrderController extends Controller
 
         // return order id for users order
         return ['success' => 'Your order has been placed!', 'id' => $user->order->id];
+    }
+
+    protected function validateData(Request $request)
+    {
+        $key = [
+            'address.address1' => 'address1',
+            'address.address2' => 'address2',
+            'address.city' => 'city',
+            'address.state' => 'state',
+            'address.zip' => 'zip',
+            'payment.creditCardNumber' => 'creditCardNumber',
+            'payment.expirationDate' => 'expirationDate'
+        ];
+
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|string|unique',
+            $key['address.address1'] => 'required|string',
+            $key['address.address2'] => 'string',
+            $key['address.city'] => 'required|string',
+            $key['address.state'] => 'required|string',
+            $key['address.zip'] => 'required|string',
+            'phone' => 'required|string',
+            'quantity' => 'integer|max:3',
+            $key['payment.creditCardNumber'] => 'required|string',
+            $key['payment.expirationDate'] => 'required|string'
+        ]);
+
+        \Log::info('validated', [
+            'validation' => $validated
+        ]);
+        // if ($validated) {
+        //     return true;
+        // }
+
+        // return the errors
+        // return $validated->toArray();
     }
 }
