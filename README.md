@@ -1,17 +1,52 @@
 ## Magic Potion launch site
 
-#### Currently deployed at:
+#### Site is located at:
  https://floating-inlet-95445.herokuapp.com/
 
 ### Setup
-- React and Laravel
-    - For frontend: 
-        - `npm install` to install dependencies
-        - `npm run dev` after each change made or `npm run watch` in the terminal to watch for continuous changes
-    - For backend
-        - `composer install` to install dependencies
+
+- Laravel valet
+    - If you do not have Laravel Valet installed, follow the instructions [here](https://laravel.com/docs/8.x/valet#installation) 
+        ##### TL/DR
+        - `brew update`
+        - `brew install php`
+        - Install composer [here](https://getcomposer.org/)
+        - `composer global require laravel/valet`. Make sure the ~/.composer/vendor/bin directory is in your system's "PATH".
+        - `valet install`
+    - Directions to serve the site (https://laravel.com/docs/8.x/valet#serving-sites): 
+        ##### TL/DR
+        - In your terminal, make a new directory for the project: 
+            - `mkdir ~/Code`
+            - `cd ~/Code`
+            - run `valet park`
+    - Fork or clone project here into `~/Code` directory: [magic-potion](https://github.com/tthompson899/magic-potion.git)
+    - `composer install` to install dependencies
+    - Once project is cloned, spin up the website at [magic-potion.test](http://magic-potion.test/)
+
+- MySQL
+    - `brew install mysql@5.7`
+    - `brew services start mysql@5.7`
+
+    - Once valet and project has been cloned locally, run `composer install`
+    - Database setup info is located in .env file, below is my setup  
+           DB_CONNECTION=mysql  
+           DB_HOST=127.0.0.1  
+           DB_PORT=3306  
+           DB_DATABASE=magic_potion  
+           DB_USERNAME=root  
+           DB_PASSWORD=password  
+
+- React
+    - For frontend:
+        - If you have not already, install npm: https://www.npmjs.com/get-npm
+        - In your terminal run `npm install` to install dependencies
+        - Run `npm run dev` after each change made or `npm run watch` in the terminal to watch for continuous changes
 
 - After installations, local app is located at http://magic-potion.test
+
+#### How to view api
+- The API can be accessed via a tool for API testing, I used Postman
+    - POST, PATCH, DELETE, GET requests all use the http://magic-potion.test url
 
 ### Method
 #### Describe your data schema and how it relates to the purchasing of magic potions.
