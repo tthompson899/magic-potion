@@ -15,3 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/magic', [OrderController::class, 'create']);
+Route::get('/magic', [OrderController::class, 'get']);
+Route::patch('/magic', [OrderController::class, 'update']);
+Route::delete('/magic/{id}', [OrderController::class, 'delete']);
