@@ -1,8 +1,5 @@
 ## Magic Potion launch site
 
-#### Site is located at:
- https://floating-inlet-95445.herokuapp.com/
-
 ### Setup
 
 - Laravel valet
